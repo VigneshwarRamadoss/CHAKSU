@@ -1,0 +1,337 @@
+.page {
+  overflow: clip;
+  background: var(--color-bone);
+  color: var(--color-ink);
+}
+
+.hero {
+  min-height: 100svh;
+  display: grid;
+  grid-template-columns: 1fr 1.05fr;
+  background: var(--color-ink);
+  color: var(--color-bone);
+}
+
+.heroCopy {
+  min-width: 0;
+  padding: clamp(7.5rem, 12vw, 11rem) clamp(1.5rem, 5vw, 6rem) var(--space-8);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.eyebrow,
+.sectionIndex,
+.mediaCaption,
+.principleNumber {
+  font-family: var(--font-mono);
+  font-size: var(--text-meta);
+  line-height: 1.4;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.heroTitle {
+  margin-top: var(--space-5);
+  font-family: var(--font-display);
+  font-size: clamp(5.5rem, 10.5vw, 10rem);
+  font-weight: 400;
+  line-height: .78;
+  letter-spacing: -.025em;
+  text-transform: uppercase;
+}
+
+.heroTitle span {
+  display: block;
+  color: var(--color-sodium);
+}
+
+.heroLead {
+  width: min(36rem, 100%);
+  margin-top: var(--space-7);
+  font-size: var(--text-body-lg);
+  line-height: 1.55;
+}
+
+.heroMedia {
+  position: relative;
+  min-height: 100svh;
+  overflow: hidden;
+}
+
+.image {
+  object-fit: cover;
+}
+
+.heroMedia::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(10, 10, 10, .35), transparent 35%);
+  pointer-events: none;
+}
+
+.mediaCaption {
+  position: absolute;
+  right: var(--space-5);
+  bottom: var(--space-5);
+  z-index: 1;
+  padding: .55rem .7rem;
+  background: var(--color-bone);
+  color: var(--color-ink);
+}
+
+.origin,
+.truth {
+  display: grid;
+  grid-template-columns: minmax(10rem, 1fr) minmax(0, 3fr);
+  gap: var(--space-7);
+  padding: var(--space-10) clamp(1.5rem, 5vw, 6rem);
+  border-bottom: 1px solid rgba(10, 10, 10, .24);
+}
+
+.sectionTitle {
+  max-width: 13ch;
+  font-family: var(--font-display);
+  font-size: var(--text-display-lg);
+  font-weight: 400;
+  line-height: .92;
+  text-transform: uppercase;
+}
+
+.proseColumns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-7);
+  margin-top: var(--space-7);
+  font-size: var(--text-body-lg);
+  line-height: 1.65;
+}
+
+.principles {
+  padding: var(--space-10) clamp(1.5rem, 5vw, 6rem);
+  background: var(--color-paper);
+}
+
+.principlesHeader {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: var(--space-7);
+  margin-bottom: var(--space-8);
+}
+
+.principleGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--color-ink);
+}
+
+.principleCard {
+  min-height: 22rem;
+  padding: var(--space-5);
+  border-right: 1px solid rgba(10, 10, 10, .35);
+  display: flex;
+  flex-direction: column;
+}
+
+.principleCard:last-child {
+  border-right: 0;
+}
+
+.principleCard h3 {
+  margin: auto 0 var(--space-5);
+  font-family: var(--font-display);
+  font-size: var(--text-h3);
+  font-weight: 400;
+  line-height: .95;
+  text-transform: uppercase;
+}
+
+.principleCard p {
+  line-height: 1.55;
+}
+
+.designCode {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 48rem;
+  background: var(--color-deep-indigo);
+  color: var(--color-bone);
+}
+
+.codeMedia {
+  position: relative;
+  min-height: 48rem;
+}
+
+.codeCopy {
+  padding: var(--space-10) clamp(1.5rem, 6vw, 7rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.codeCopy .sectionTitle {
+  margin: var(--space-6) 0 var(--space-7);
+  color: var(--color-acid);
+}
+
+.codeCopy > p:not(.sectionIndex) {
+  max-width: 35rem;
+  margin-bottom: var(--space-5);
+  font-size: var(--text-body-lg);
+  line-height: 1.6;
+}
+
+.truthTitle {
+  font-family: var(--font-display);
+  font-size: var(--text-display-xl);
+  font-weight: 400;
+  line-height: .86;
+  text-transform: uppercase;
+}
+
+.truthBody {
+  max-width: 46rem;
+  margin-top: var(--space-7);
+  font-size: clamp(1.3rem, 2vw, 2rem);
+  line-height: 1.45;
+}
+
+.cta {
+  padding: var(--space-10) clamp(1.5rem, 5vw, 6rem);
+  background: var(--color-sodium);
+}
+
+.cta h2 {
+  max-width: 12ch;
+  margin: var(--space-5) 0 var(--space-8);
+  font-family: var(--font-display);
+  font-size: var(--text-display-xl);
+  font-weight: 400;
+  line-height: .88;
+  text-transform: uppercase;
+}
+
+.ctaLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.primaryLink,
+.secondaryLink {
+  min-height: 3rem;
+  padding: .8rem 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-ink);
+  font-family: var(--font-mono);
+  font-size: var(--text-small);
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  transition: background-color var(--motion-fast) var(--ease-cut), color var(--motion-fast) var(--ease-cut);
+}
+
+.primaryLink {
+  background: var(--color-ink);
+  color: var(--color-bone);
+}
+
+.primaryLink:hover,
+.primaryLink:focus-visible {
+  background: var(--color-deep-indigo);
+}
+
+.secondaryLink:hover,
+.secondaryLink:focus-visible {
+  background: var(--color-bone);
+}
+
+@media (max-width: 899px) {
+  .hero {
+    grid-template-columns: 1fr;
+  }
+
+  .heroCopy {
+    min-height: 72svh;
+    padding: 8rem var(--space-4) var(--space-7);
+  }
+
+  .heroTitle {
+    font-size: clamp(5rem, 24vw, 8rem);
+  }
+
+  .heroMedia {
+    min-height: 70svh;
+  }
+
+  .origin,
+  .truth {
+    grid-template-columns: 1fr;
+    padding: var(--space-8) var(--space-4);
+  }
+
+  .proseColumns,
+  .designCode {
+    grid-template-columns: 1fr;
+  }
+
+  .principles {
+    padding: var(--space-8) var(--space-4);
+  }
+
+  .principlesHeader {
+    align-items: start;
+    flex-direction: column;
+  }
+
+  .principleGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .principleCard {
+    min-height: 18rem;
+    border-bottom: 1px solid rgba(10, 10, 10, .35);
+  }
+
+  .principleCard:nth-child(2) {
+    border-right: 0;
+  }
+
+  .codeMedia {
+    min-height: 70svh;
+  }
+
+  .codeCopy {
+    padding: var(--space-8) var(--space-4);
+  }
+
+  .cta {
+    padding: var(--space-8) var(--space-4);
+  }
+}
+
+@media (max-width: 560px) {
+  .principleGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .principleCard,
+  .principleCard:nth-child(2) {
+    min-height: 15rem;
+    border-right: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .primaryLink,
+  .secondaryLink {
+    transition: none;
+  }
+}

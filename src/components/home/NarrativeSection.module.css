@@ -1,0 +1,112 @@
+.narrativeSection {
+  background-color: var(--color-bone);
+  color: var(--color-ink);
+  position: relative;
+  padding: var(--space-7) var(--space-4);
+  z-index: 10;
+  overflow: hidden;
+}
+
+@media (min-width: 900px) {
+  .narrativeSection {
+    padding: var(--space-8) var(--space-6);
+  }
+}
+
+.narrativeSection::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-ink);
+  transform-origin: top;
+  transform: scaleY(0);
+  transition: transform var(--motion-slow) var(--ease-enter);
+  z-index: 0;
+}
+
+.narrativeSection[data-wipe="true"] {
+  color: var(--color-bone);
+}
+
+.narrativeSection[data-wipe="true"]::before {
+  transform: scaleY(1);
+}
+
+.narrativeContent {
+  position: relative;
+  z-index: 1;
+}
+
+.narrativeHeader {
+  margin-bottom: var(--space-7);
+}
+
+.narrativeTitle {
+  font-family: var(--font-display);
+  font-size: var(--text-display-md);
+  text-transform: uppercase;
+}
+
+.chapters {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-7);
+}
+
+.chapterBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+@media (min-width: 900px) {
+  .chapterBlock {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--space-7);
+  }
+
+  .chapterBlock:nth-child(even) {
+    flex-direction: row-reverse;
+  }
+}
+
+.chapterTextCol {
+  flex: 1;
+}
+
+.chapterText {
+  font-family: var(--font-body);
+  font-size: var(--text-lg);
+  line-height: 1.4;
+}
+
+.chapterImageCol {
+  flex: 1;
+}
+
+.chapterImageFrame {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+}
+
+.chapterImageLayer {
+  width: 100%;
+  height: 120%;
+  top: -10%;
+  position: absolute;
+}
+
+.chapterImage {
+  object-fit: cover;
+  object-position: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .narrativeSection::before {
+    transition: none;
+  }
+}

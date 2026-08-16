@@ -1,0 +1,220 @@
+.sentinel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 1px;
+  width: 1px;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-4);
+  z-index: 50;
+  background-color: rgba(10, 10, 10, 0.92);
+  color: var(--color-bone);
+  border-bottom: 1px solid transparent;
+  transition: background-color var(--motion-fast) var(--ease-enter), border-bottom-color var(--motion-fast) var(--ease-enter);
+}
+
+@supports (backdrop-filter: blur(12px)) {
+  .header {
+    background-color: rgba(10, 10, 10, 0.82);
+    backdrop-filter: blur(12px);
+  }
+}
+
+.header[data-scrolled="true"] {
+  border-bottom-color: rgba(242, 239, 230, 0.15);
+  background-color: rgba(10, 10, 10, 0.96);
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .header {
+    background-color: var(--color-ink);
+    backdrop-filter: none;
+  }
+}
+
+.wordmark {
+  font-family: var(--font-display);
+  font-size: var(--text-h3);
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  color: var(--color-bone);
+}
+
+.desktopNav {
+  display: none;
+}
+
+.utilityNav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.utilityLink {
+  background: none;
+  border: none;
+  color: inherit;
+  font-family: var(--font-body);
+  font-size: var(--text-small);
+  text-transform: uppercase;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0;
+}
+
+.mobileMenuTrigger {
+  background: none;
+  border: none;
+  color: inherit;
+  font-family: var(--font-body);
+  font-size: var(--text-small);
+  text-transform: uppercase;
+  cursor: pointer;
+  z-index: 60;
+  min-height: 44px;
+  min-width: 44px;
+  display: flex;
+  align-items: center;
+}
+
+/* Mobile Navigation Drawer */
+.mobileDrawer {
+  padding: 0;
+  border: none;
+  margin: 0;
+  max-width: 100%;
+  max-height: 100%;
+  width: 100%;
+  height: 100vh;
+  background-color: var(--color-ink);
+  color: var(--color-bone);
+  z-index: 100;
+}
+
+.mobileDrawer::backdrop {
+  background: transparent;
+}
+
+.mobileDrawer[open] {
+  animation: slideIn var(--motion-base) var(--ease-enter) forwards;
+  display: flex;
+  flex-direction: column;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mobileDrawer[open] {
+    animation: none;
+    transform: translateY(0);
+  }
+}
+
+.drawerHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 var(--space-4);
+  height: 64px;
+  border-bottom: 1px solid rgba(242, 239, 230, 0.1);
+}
+
+.mobileMenuClose {
+  background: none;
+  border: none;
+  color: inherit;
+  font-family: var(--font-body);
+  font-size: var(--text-small);
+  text-transform: uppercase;
+  cursor: pointer;
+  padding: 0;
+  min-height: 44px;
+  min-width: 44px;
+  display: flex;
+  align-items: center;
+}
+
+.mobileNav {
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-6) var(--space-4);
+  gap: var(--space-4);
+}
+
+.mobileNavLink {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-4);
+  color: var(--color-bone);
+  text-decoration: none;
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid rgba(242, 239, 230, 0.08);
+  transition: color var(--motion-fast) var(--ease-enter);
+}
+
+.mobileNavIndex {
+  font-family: var(--font-mono);
+  font-size: var(--text-small);
+  color: var(--color-concrete);
+}
+
+.mobileNavLabel {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 8vw, 4.5rem);
+  text-transform: uppercase;
+  letter-spacing: -0.015em;
+  line-height: 0.95;
+}
+
+.mobileNavLink:hover,
+.mobileNavLink:focus-visible {
+  color: var(--color-sodium);
+}
+
+@media (min-width: 900px) {
+  .header {
+    padding: 0 var(--space-6);
+  }
+
+  .desktopNav {
+    display: flex;
+    gap: var(--space-5);
+  }
+
+  .navLink {
+    font-family: var(--font-body);
+    font-size: var(--text-small);
+    text-transform: uppercase;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--color-bone);
+  }
+
+  .navLink:hover {
+    opacity: 0.8;
+  }
+
+  .mobileMenuTrigger,
+  .mobileDrawer {
+    display: none;
+  }
+}

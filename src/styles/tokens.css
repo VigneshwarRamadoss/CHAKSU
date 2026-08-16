@@ -1,0 +1,65 @@
+:root {
+  /* Colors */
+  --color-ink: #0A0A0A;
+  --color-bone: #F2EFE6;
+  --color-paper: #FAF9F5;
+  --color-concrete: #77736B;
+  --color-deep-indigo: #0B1836;
+  --color-sodium: #FF8A1F;
+  --color-acid: #D7FF26;
+  --color-error: #C8342D;
+  --color-success: #166B4A;
+  --color-focus: #3B6FFF;
+
+  /* Typography Scales */
+  --font-display: var(--font-league-gothic), "PP Formula Condensed", sans-serif;
+  --font-body: "Inter", "PP Neue Montreal Text", Arial, sans-serif;
+  --font-mono: "Space Mono", ui-monospace, monospace;
+
+  --text-display-hero: clamp(4.5rem, 13vw, 11rem);
+  --text-display-xl: clamp(3.5rem, 9vw, 8rem);
+  --text-display-lg: clamp(2.75rem, 6vw, 5.5rem);
+  --text-h1: clamp(2.5rem, 5vw, 4.5rem);
+  --text-h2: clamp(2rem, 3.8vw, 3.5rem);
+  --text-h3: clamp(1.5rem, 2.2vw, 2.25rem);
+  --text-body-lg: clamp(1.0625rem, 1.2vw, 1.25rem);
+  --text-body: 1rem;
+  --text-small: .875rem;
+  --text-meta: .75rem;
+
+  /* Spacing Scale */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+  --space-10: 128px;
+  --space-11: 192px;
+
+  /* Motion Tokens */
+  --motion-instant: 120ms;
+  --motion-fast: 180ms;
+  --motion-base: 320ms;
+  --motion-slow: 640ms;
+  --motion-cinematic: 1100ms;
+
+  --ease-cut: cubic-bezier(.2, .8, .2, 1);
+  --ease-enter: cubic-bezier(.16, 1, .3, 1);
+  --ease-exit: cubic-bezier(.7, 0, .84, 0);
+
+  /* Parallax Tokens */
+  --parallax-near: 1;
+  --parallax-mid: .55;
+  --parallax-far: .24;
+  --parallax-type: .12;
+
+  /* Border and Radius */
+  --radius-default: 0px;
+  --radius-input: 2px;
+  --border-width: 1px;
+  --border-focus: 2px;
+}
