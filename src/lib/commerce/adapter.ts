@@ -44,6 +44,56 @@ export type ProductQueryResult = {
   availableFilters: FilterMetadata;
 };
 
+type ShopifyMoney = { amount: string | number; currencyCode: string };
+type ShopifyEdge<T> = { node: T };
+type ShopifySelectedOption = { name: string; value: string };
+type ShopifyProductNode = {
+  id: string;
+  handle: string;
+  title: string;
+  description: string;
+  tags?: string[];
+  availableForSale: boolean;
+  priceRange: { minVariantPrice: ShopifyMoney; maxVariantPrice: ShopifyMoney };
+  media: {
+    edges: ShopifyEdge<{
+      mediaContentType?: string;
+      image?: { url: string; altText?: string | null; width?: number | null; height?: number | null };
+    }>[];
+  };
+  variants: {
+    edges: ShopifyEdge<{
+      id: string;
+      sku?: string | null;
+      availableForSale: boolean;
+      price: ShopifyMoney;
+      selectedOptions: ShopifySelectedOption[];
+    }>[];
+  };
+};
+type ShopifyCollectionNode = {
+  id: string;
+  handle: string;
+  title: string;
+  description: string;
+  image?: { url: string } | null;
+};
+type ShopifyResponse<T> = { data: T };
+
+function toMoney(money: ShopifyMoney): ProductVariant["price"] {
+  return {
+    amount: Number(money.amount),
+    currencyCode: money.currencyCode === "USD" ? "USD" : "INR",
+  };
+}
+
+function toCategory(tag?: string): Product["category"] {
+  const category = tag?.replace("category:", "");
+  return category === "outerwear" || category === "utility" || category === "essentials"
+    ? category
+    : "k-line";
+}
+
 export function formatINRPrice(amount: number): string {
   return new Intl.NumberFormat("en-IN", {
     style: "currency",
@@ -54,37 +104,37 @@ export function formatINRPrice(amount: number): string {
 
 const isShopifyConfigured = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN && process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN;
 
-function shopifyToProduct(node: any): Product {
+function shopifyToProduct(node: ShopifyProductNode): Product {
   const categoryTag = node.tags?.find((t: string) => t.startsWith("category:"));
   return {
     id: node.id,
     handle: node.handle,
     title: node.title,
     description: node.description,
-    category: categoryTag ? categoryTag.replace("category:", "") : "k-line",
+    category: toCategory(categoryTag),
     isNewRelease: node.tags?.includes("new-release") || false,
     availableForSale: node.availableForSale,
     priceRange: {
-      minVariantPrice: node.priceRange.minVariantPrice,
-      maxVariantPrice: node.priceRange.maxVariantPrice,
+      minVariantPrice: toMoney(node.priceRange.minVariantPrice),
+      maxVariantPrice: toMoney(node.priceRange.maxVariantPrice),
     },
-    media: node.media.edges.map((e: any) => ({
+    media: node.media.edges.map((e) => ({
       url: e.node.image?.url || "",
       altText: e.node.image?.altText || node.title,
       width: e.node.image?.width || 0,
       height: e.node.image?.height || 0,
       type: e.node.mediaContentType === "VIDEO" ? "video" : "image"
     })),
-    variants: node.variants.edges.map((e: any) => {
-      const colorOpt = e.node.selectedOptions.find((o: any) => o.name === "Color");
-      const sizeOpt = e.node.selectedOptions.find((o: any) => o.name === "Size");
+    variants: node.variants.edges.map((e) => {
+      const colorOpt = e.node.selectedOptions.find((o) => o.name === "Color");
+      const sizeOpt = e.node.selectedOptions.find((o) => o.name === "Size");
       return {
         id: e.node.id,
         sku: e.node.sku || "",
         color: colorOpt ? colorOpt.value : "",
         size: sizeOpt ? sizeOpt.value : "",
         availableForSale: e.node.availableForSale,
-        price: e.node.price,
+        price: toMoney(e.node.price),
       }
     }),
   }
@@ -101,7 +151,7 @@ export async function getCollection(handle: string): Promise<Collection | null> 
   }
   
   try {
-    const { body } = await shopifyFetch<any>({
+    const { body } = await shopifyFetch<ShopifyResponse<{ collection: ShopifyCollectionNode | null }>>({
       query: getCollectionQuery,
       variables: { handle },
       tags: ['collections']
@@ -125,13 +175,13 @@ export async function getAllCollections(): Promise<Collection[]> {
   if (!isShopifyConfigured) return MOCK_COLLECTIONS;
   
   try {
-    const { body } = await shopifyFetch<any>({
+    const { body } = await shopifyFetch<ShopifyResponse<{ collections: { edges: ShopifyEdge<ShopifyCollectionNode>[] } }>>({
       query: getCollectionsQuery,
       variables: { first: 20 },
       tags: ['collections']
     });
     
-    return body.data.collections.edges.map((e: any) => ({
+    return body.data.collections.edges.map((e) => ({
       id: e.node.id,
       handle: e.node.handle,
       title: e.node.title,
@@ -165,6 +215,10 @@ export async function getProducts(params: ProductQueryParams = {}): Promise<Prod
         p.category.toLowerCase().includes(q)
       );
     }
+
+    // Facet counts must describe the current collection/search universe, not
+    // the entire fixture catalogue. Capture that base before applying facets.
+    const facetUniverse = [...filtered];
 
     if (params.category) {
       const cats = Array.isArray(params.category) ? params.category : [params.category];
@@ -218,29 +272,29 @@ export async function getProducts(params: ProductQueryParams = {}): Promise<Prod
         break;
     }
 
-    const allCategories = Array.from(new Set(MOCK_PRODUCTS.map(p => p.category)));
-    const allColors = Array.from(new Set(MOCK_PRODUCTS.flatMap(p => p.variants.map(v => v.color))));
-    const allSizes = Array.from(new Set(MOCK_PRODUCTS.flatMap(p => p.variants.map(v => v.size))));
+    const allCategories = Array.from(new Set(facetUniverse.map(p => p.category)));
+    const allColors = Array.from(new Set(facetUniverse.flatMap(p => p.variants.map(v => v.color))));
+    const allSizes = Array.from(new Set(facetUniverse.flatMap(p => p.variants.map(v => v.size))));
     
-    const prices = MOCK_PRODUCTS.map(p => p.priceRange.minVariantPrice.amount);
-    const minPrice = Math.min(...prices);
-    const maxPrice = Math.max(...prices);
+    const prices = facetUniverse.map(p => p.priceRange.minVariantPrice.amount);
+    const minPrice = prices.length > 0 ? Math.min(...prices) : 0;
+    const maxPrice = prices.length > 0 ? Math.max(...prices) : 0;
 
     const availableFilters: FilterMetadata = {
       categories: allCategories.map(c => ({
         label: c.toUpperCase().replace("-", " "),
         value: c,
-        count: MOCK_PRODUCTS.filter(p => p.category === c).length
+        count: facetUniverse.filter(p => p.category === c).length
       })),
       colors: allColors.map(c => ({
         label: c,
         value: c.toLowerCase(),
-        count: MOCK_PRODUCTS.filter(p => p.variants.some(v => v.color.toLowerCase() === c.toLowerCase())).length
+        count: facetUniverse.filter(p => p.variants.some(v => v.color.toLowerCase() === c.toLowerCase())).length
       })),
       sizes: allSizes.map(s => ({
         label: s,
         value: s.toLowerCase(),
-        count: MOCK_PRODUCTS.filter(p => p.variants.some(v => v.size.toLowerCase() === s.toLowerCase())).length
+        count: facetUniverse.filter(p => p.variants.some(v => v.size.toLowerCase() === s.toLowerCase())).length
       })),
       priceRange: { min: minPrice, max: maxPrice }
     };
@@ -284,20 +338,20 @@ export async function getProducts(params: ProductQueryParams = {}): Promise<Prod
     }
   }
   
-  let queryParts = [];
+  const queryParts: string[] = [];
   if (params.query) queryParts.push(`title:*${params.query}*`);
   // Simplified query mapping for mock to real
   
   const shopifyQuery = queryParts.length > 0 ? queryParts.join(' AND ') : undefined;
   
   try {
-    const { body } = await shopifyFetch<any>({
+    const { body } = await shopifyFetch<ShopifyResponse<{ products: { edges: ShopifyEdge<ShopifyProductNode>[]; pageInfo: { hasNextPage: boolean } } }>>({
       query: getProductsQuery,
       variables: { first: params.pageSize || 12, query: shopifyQuery, sortKey, reverse },
       tags: ['products']
     });
     
-    const products = body.data.products.edges.map((e: any) => shopifyToProduct(e.node));
+    const products = body.data.products.edges.map((e) => shopifyToProduct(e.node));
     
     return {
       products,
@@ -341,7 +395,7 @@ export async function getProduct(handle: string): Promise<Product | null> {
   }
   
   try {
-    const { body } = await shopifyFetch<any>({
+    const { body } = await shopifyFetch<ShopifyResponse<{ product: ShopifyProductNode | null }>>({
       query: getProductQuery,
       variables: { handle },
       tags: ['products']

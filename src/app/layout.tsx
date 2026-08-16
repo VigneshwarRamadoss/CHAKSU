@@ -29,8 +29,21 @@ const leagueGothic = League_Gothic({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://chaksu.vercel.app"),
   title: "CHAKSU | Premium Streetwear",
   description: "Statement silhouettes. Proof in every detail.",
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    siteName: "CHAKSU",
+    title: "CHAKSU | Premium Streetwear",
+    description: "Statement silhouettes. Proof in every detail.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "CHAKSU | Premium Streetwear",
+    description: "Statement silhouettes. Proof in every detail.",
+  },
 };
 
 const preloaderBootstrapScript = `(function(){if(location.pathname!=="/")return;var m=new URLSearchParams(location.search).get("intro");var d=${process.env.NODE_ENV !== "production"};var f=d&&(m==="replay"||m==="hold");if(d&&m==="static")return;var r=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;var c=navigator.connection;var s=c&&(c.saveData===true||c.effectiveType==="slow-2g"||c.effectiveType==="2g");var v=false;try{v=sessionStorage.getItem(${JSON.stringify(PRELOADER_SESSION_KEY)})==="true"}catch(e){}if(!r&&!s&&(f||!v)){document.documentElement.dataset.chaksuIntro="eligible";setTimeout(function(){delete document.documentElement.dataset.chaksuIntro},1600)}})()`;

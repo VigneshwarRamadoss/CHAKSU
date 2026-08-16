@@ -62,7 +62,7 @@ export default async function SearchPage({ searchParams }: PageProps) {
 
         {!query && (
           <div className={styles.emptyState}>
-            <h2 className={styles.emptyTitle}>Search the Archive</h2>
+            <h1 className={styles.emptyTitle}>Search the Archive</h1>
             <p className={styles.emptyDesc}>
               Enter a search query above to explore CHAKSU technical outerwear, K-line tees, and cargo garments.
             </p>

@@ -8,6 +8,7 @@ import styles from "./CartPage.module.css";
 
 export function CartPageContent() {
   const { cart, updateQuantity, removeFromCart } = useCart();
+  const checkoutUrl = cart.checkoutUrl?.startsWith("https://") ? cart.checkoutUrl : undefined;
 
   if (cart.lines.length === 0) {
     return (
@@ -116,12 +117,16 @@ export function CartPageContent() {
             </span>
           </div>
 
-          <button type="button" className={styles.checkoutBtn} disabled>
-            Checkout — Coming Soon
-          </button>
+          {checkoutUrl ? (
+            <a href={checkoutUrl} className={styles.checkoutBtn}>Secure Checkout</a>
+          ) : (
+            <button type="button" className={`${styles.checkoutBtn} ${styles.checkoutBtnDisabled}`} disabled>
+              Checkout Unavailable
+            </button>
+          )}
 
           <p className={styles.checkoutNote}>
-            Shopify checkout integration will be connected in Phase 5.
+            Shipping and taxes are calculated at checkout. Secure checkout activates when the live store connection is available.
           </p>
         </div>
       </div>

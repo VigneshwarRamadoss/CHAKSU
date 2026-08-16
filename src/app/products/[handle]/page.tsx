@@ -42,6 +42,18 @@ export default async function ProductPage({ params }: PageProps) {
   }
 
   const relatedProducts = await getRelatedProducts(product);
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://chaksu.vercel.app";
+  const productUrl = `${siteUrl}/products/${product.handle}`;
+  const offers = product.variants.map(variant => ({
+    "@type": "Offer",
+    sku: variant.sku,
+    price: variant.price.amount,
+    priceCurrency: variant.price.currencyCode,
+    availability: variant.availableForSale
+      ? "https://schema.org/InStock"
+      : "https://schema.org/OutOfStock",
+    url: productUrl,
+  }));
 
   return (
     <div className={styles.pdpPage}>
@@ -63,17 +75,15 @@ export default async function ProductPage({ params }: PageProps) {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Product",
+            "@id": productUrl,
             name: product.title,
             description: product.description,
-            image: product.media[0]?.url,
-            offers: {
-              "@type": "Offer",
-              price: product.priceRange.minVariantPrice.amount,
-              priceCurrency: product.priceRange.minVariantPrice.currencyCode,
-              availability: product.availableForSale
-                ? "https://schema.org/InStock"
-                : "https://schema.org/OutOfStock",
-            },
+            url: productUrl,
+            brand: { "@type": "Brand", name: "CHAKSU" },
+            category: product.category,
+            image: product.media.map(media => media.url),
+            sku: product.variants[0]?.sku,
+            offers,
           }),
         }}
       />

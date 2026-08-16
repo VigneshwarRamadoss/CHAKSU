@@ -56,11 +56,17 @@
   gap: var(--space-3);
   overflow-x: auto;
   padding-top: var(--space-5);
-  scrollbar-width: none;
+  scrollbar-width: thin;
+  padding-bottom: var(--space-2);
+  overscroll-behavior-inline: contain;
 }
 
 .collectionNav::-webkit-scrollbar {
-  display: none;
+  height: 3px;
+}
+
+.collectionNav::-webkit-scrollbar-thumb {
+  background: rgba(10, 10, 10, 0.35);
 }
 
 .tabLink {
@@ -240,8 +246,8 @@
     flex-shrink: 0;
     position: sticky;
     top: 84px; /* Does not collide with fixed header (64px) */
-    max-height: calc(100vh - 100px);
-    overflow-y: auto;
+    max-height: none;
+    overflow: visible;
     padding-right: var(--space-4);
     border-right: 1px solid var(--border-light);
   }
@@ -347,8 +353,8 @@
   position: absolute;
   top: var(--space-3);
   right: var(--space-3);
-  background-color: var(--color-focus);
-  color: #ffffff;
+  background-color: var(--color-sodium);
+  color: var(--color-ink);
   font-family: var(--font-body);
   font-size: var(--text-small);
   text-transform: uppercase;

@@ -23,7 +23,11 @@ export function ProductInfo({ product }: ProductInfoProps) {
     {
       title: "Shipping & Returns",
       content:
-        "Development placeholder — shipping and returns information will be sourced from the commerce adapter in Phase 5.",
+        "Orders ship from India with tracking once dispatched. Delivery speed and charges are calculated at checkout. Unworn items with original tags may be requested for return under the policy shown at checkout; final-sale items are excluded.",
+    },
+    {
+      title: "Fabric & Care",
+      content: `${product.subtitle ? `${product.subtitle}. ` : ""}Refer to the garment care label before washing. Store dry and avoid direct heat to preserve the fabric finish and hardware.`,
     },
   ];
 
@@ -48,6 +52,7 @@ export function ProductInfo({ product }: ProductInfoProps) {
       </div>
 
       <SizeGuideDialog
+        product={product}
         isOpen={isSizeGuideOpen}
         onClose={() => setIsSizeGuideOpen(false)}
       />

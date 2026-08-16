@@ -1,0 +1,110 @@
+.page {
+  min-height: calc(100vh - 64px);
+  background: var(--color-bone);
+  color: var(--color-ink);
+}
+
+.hero {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: clamp(4rem, 10vw, 8rem) var(--space-4);
+}
+
+.eyebrow {
+  margin: 0 0 var(--space-3);
+  font-family: var(--font-mono);
+  font-size: var(--text-small);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-concrete);
+}
+
+.title {
+  max-width: 900px;
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 14vw, 10rem);
+  line-height: 0.82;
+  text-transform: uppercase;
+}
+
+.intro {
+  max-width: 620px;
+  margin: var(--space-5) 0 0;
+  font-size: var(--text-body-lg);
+  line-height: 1.55;
+  color: var(--color-ink-muted);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-6);
+}
+
+.primaryAction,
+.secondaryAction {
+  min-height: 48px;
+  padding: 0 var(--space-5);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-body);
+  font-size: var(--text-small);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border: 1px solid var(--color-ink);
+}
+
+.primaryAction {
+  background: var(--color-ink);
+  color: var(--color-bone);
+}
+
+.secondaryAction {
+  color: var(--color-ink);
+}
+
+.sections {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--space-4) var(--space-9);
+  display: grid;
+  gap: var(--space-5);
+}
+
+.section {
+  scroll-margin-top: 88px;
+  padding: var(--space-6) 0;
+  border-top: 1px solid rgba(10, 10, 10, 0.14);
+}
+
+.section h2 {
+  margin: 0 0 var(--space-3);
+  font-family: var(--font-display);
+  font-size: var(--text-h2);
+  text-transform: uppercase;
+}
+
+.section p {
+  max-width: 720px;
+  line-height: 1.65;
+  color: var(--color-ink-muted);
+}
+
+.loadingLine {
+  width: min(100%, 720px);
+  height: 1px;
+  margin-top: var(--space-6);
+  background: linear-gradient(90deg, var(--color-ink) 0 35%, rgba(10, 10, 10, 0.12) 35% 100%);
+}
+
+@media (min-width: 900px) {
+  .hero,
+  .sections {
+    padding-left: var(--space-6);
+    padding-right: var(--space-6);
+  }
+}

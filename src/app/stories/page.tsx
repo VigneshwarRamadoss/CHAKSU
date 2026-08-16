@@ -17,8 +17,8 @@ export default function Stories() {
     <div className={styles.page}>
       <header className={styles.hero}>
         <Image
-          src="/images/Visual Background UI Image.png"
-          alt=""
+          src="/images/editorial/stories-night-shift-hero.png"
+          alt="Two young South Indian adults in black technical streetwear moving through rain-dark Chennai architecture at night"
           fill
           sizes="100vw"
           className={styles.heroImage}
@@ -94,8 +94,8 @@ export default function Stories() {
                 </p>
                 <h3>{story.title}</h3>
                 <p>{story.dek}</p>
-                <Link href={story.productHref} className={styles.textLink}>
-                  {story.productLabel} <span aria-hidden="true">↗</span>
+                <Link href={`/stories/${story.id}`} className={styles.textLink}>
+                  Read field note <span aria-hidden="true">↗</span>
                 </Link>
               </div>
             </article>

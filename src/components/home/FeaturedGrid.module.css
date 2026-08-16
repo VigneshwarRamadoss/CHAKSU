@@ -12,6 +12,24 @@
 
 .gridHeader {
   margin-bottom: var(--space-5);
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.headerLink,
+.viewAllLink {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-body);
+  font-size: var(--text-small);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-decoration: underline;
+  text-underline-offset: 5px;
 }
 
 .gridTitle {
@@ -49,6 +67,27 @@
   aspect-ratio: 4 / 5;
   background-color: #ececec;
   overflow: hidden;
+}
+
+.statusBadge {
+  position: absolute;
+  top: var(--space-3);
+  left: var(--space-3);
+  z-index: 5;
+  padding: var(--space-1) var(--space-3);
+  background: var(--color-ink);
+  color: var(--color-bone);
+  font-family: var(--font-body);
+  font-size: var(--text-meta);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.gridFooter {
+  display: flex;
+  justify-content: center;
+  padding-top: var(--space-6);
 }
 
 .mediaFrame {
@@ -111,6 +150,11 @@
 }
 
 @media (max-width: 480px) {
+  .gridHeader {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
   .productInfo {
     flex-direction: column;
     gap: var(--space-1);

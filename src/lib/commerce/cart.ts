@@ -25,6 +25,31 @@ export type Cart = {
   subtotal: Money;
 };
 
+type ShopifyCartNode = {
+  id: string;
+  checkoutUrl?: string;
+  cost: { subtotalAmount: { amount: string; currencyCode: string } };
+  lines: {
+    edges: Array<{
+      node: {
+        id: string;
+        quantity: number;
+        cost: { totalAmount: { amount: string; currencyCode: string } };
+        merchandise: {
+          id: string;
+          title: string;
+          product: {
+            handle: string;
+            title: string;
+            media: { edges: Array<{ node: { image?: { url: string; altText?: string | null } } }> };
+          };
+        };
+      };
+    }>;
+  };
+};
+type ShopifyResponse<T> = { data: T };
+
 const MAX_LINE_QUANTITY = 10;
 const CART_STORAGE_KEY = "chaksu_cart_v1";
 
@@ -79,10 +104,10 @@ export function createCartLine(
 }
 
 /* ─── Shopify Mapping ─── */
-function shopifyToCart(node: any): Cart {
+function shopifyToCart(node: ShopifyCartNode | null | undefined): Cart {
   if (!node) return emptyCart();
   
-  const lines = node.lines.edges.map((e: any) => {
+  const lines: CartLine[] = node.lines.edges.map((e) => {
     const item = e.node;
     const variant = item.merchandise;
     const product = variant.product;
@@ -94,11 +119,11 @@ function shopifyToCart(node: any): Cart {
       variantTitle: variant.title,
       price: {
         amount: parseFloat(item.cost.totalAmount.amount) / item.quantity,
-        currencyCode: item.cost.totalAmount.currencyCode
+        currencyCode: item.cost.totalAmount.currencyCode === "USD" ? "USD" : "INR"
       },
       quantity: item.quantity,
       image: product.media.edges[0]?.node.image?.url,
-      imageAlt: product.media.edges[0]?.node.image?.altText,
+      imageAlt: product.media.edges[0]?.node.image?.altText ?? undefined,
     };
   });
 
@@ -109,7 +134,7 @@ function shopifyToCart(node: any): Cart {
     totalQuantity: lines.reduce((acc: number, l: CartLine) => acc + l.quantity, 0),
     subtotal: {
       amount: parseFloat(node.cost.subtotalAmount.amount),
-      currencyCode: node.cost.subtotalAmount.currencyCode
+      currencyCode: node.cost.subtotalAmount.currencyCode === "USD" ? "USD" : "INR"
     }
   };
 }
@@ -133,16 +158,16 @@ export async function addLine(cart: Cart, line: CartLine): Promise<Cart> {
   }
 
   try {
-    let currentCartId = cart.id;
+    const currentCartId = cart.id;
     if (cart.id.startsWith('dev-cart-')) {
-      const { body } = await shopifyFetch<any>({
+      const { body } = await shopifyFetch<ShopifyResponse<{ cartCreate: { cart: ShopifyCartNode } }>>({
         query: createCartMutation,
         variables: { lineItems: [{ merchandiseId: line.variantId, quantity: line.quantity }] },
         cache: 'no-store'
       });
       return shopifyToCart(body.data.cartCreate.cart);
     } else {
-      const { body } = await shopifyFetch<any>({
+      const { body } = await shopifyFetch<ShopifyResponse<{ cartLinesAdd: { cart: ShopifyCartNode } }>>({
         query: addToCartMutation,
         variables: { cartId: currentCartId, lines: [{ merchandiseId: line.variantId, quantity: line.quantity }] },
         cache: 'no-store'
@@ -169,7 +194,7 @@ export async function updateLineQuantity(cart: Cart, variantId: string, quantity
 
     if (quantity === 0) return removeLine(cart, variantId);
 
-    const { body } = await shopifyFetch<any>({
+    const { body } = await shopifyFetch<ShopifyResponse<{ cartLinesUpdate: { cart: ShopifyCartNode } }>>({
       query: updateCartLinesMutation,
       variables: { cartId: cart.id, lines: [{ id: line.id, quantity }] },
       cache: 'no-store'
@@ -191,7 +216,7 @@ export async function removeLine(cart: Cart, variantId: string): Promise<Cart> {
     const line = cart.lines.find(l => l.variantId === variantId);
     if (!line) return cart;
 
-    const { body } = await shopifyFetch<any>({
+    const { body } = await shopifyFetch<ShopifyResponse<{ cartLinesRemove: { cart: ShopifyCartNode } }>>({
       query: removeFromCartMutation,
       variables: { cartId: cart.id, lineIds: [line.id] },
       cache: 'no-store'
@@ -231,7 +256,7 @@ export async function loadCart(): Promise<Cart> {
       const cartId = localStorage.getItem(CART_STORAGE_KEY + "_id");
       if (!cartId || cartId.startsWith('dev-cart-')) return emptyCart();
       
-      const { body } = await shopifyFetch<any>({
+      const { body } = await shopifyFetch<ShopifyResponse<{ cart: ShopifyCartNode | null }>>({
         query: getCartQuery,
         variables: { cartId },
         cache: 'no-store'

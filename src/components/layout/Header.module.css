@@ -71,7 +71,10 @@
   text-transform: uppercase;
   font-weight: 500;
   cursor: pointer;
-  padding: 0;
+  min-height: 44px;
+  padding: 0 var(--space-1);
+  display: inline-flex;
+  align-items: center;
 }
 
 .mobileMenuTrigger {
@@ -211,6 +214,11 @@
 
   .navLink:hover {
     opacity: 0.8;
+  }
+
+  .navLink[aria-current="page"] {
+    text-decoration: underline;
+    text-underline-offset: 6px;
   }
 
   .mobileMenuTrigger,

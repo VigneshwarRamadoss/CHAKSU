@@ -182,10 +182,10 @@ export function VariantSelector({ product, onSizeGuideOpen }: VariantSelectorPro
         type="button"
         className={styles.addToCartBtn}
         onClick={handleAddToCart}
-        disabled={isSubmitting || isSoldOut}
+        disabled={isSubmitting || isSoldOut || !allOptionsSelected}
         aria-busy={isSubmitting}
       >
-        {isSubmitting ? "Adding…" : isSoldOut ? "Sold Out" : "Add to Bag"}
+        {isSubmitting ? "Adding…" : isSoldOut ? "Sold Out" : !allOptionsSelected ? "Select Options" : "Add to Bag"}
       </button>
 
       {/* Sentinel to observe when main buy button scrolls past */}

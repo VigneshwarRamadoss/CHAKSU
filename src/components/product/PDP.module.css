@@ -543,6 +543,19 @@
   padding: var(--space-5);
 }
 
+.sizeProductName {
+  margin: 0 0 var(--space-4);
+  font-family: var(--font-body);
+  font-size: var(--text-small);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.sizeTableWrap {
+  overflow-x: auto;
+}
+
 .sizeTable {
   width: 100%;
   border-collapse: collapse;
@@ -569,4 +582,24 @@
   color: var(--color-concrete);
   margin-top: var(--space-3);
   font-style: italic;
+}
+
+.dimensionList {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+}
+
+.dimensionList div {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid rgba(10, 10, 10, 0.08);
+}
+
+.dimensionList dt {
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }

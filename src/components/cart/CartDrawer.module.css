@@ -260,7 +260,7 @@
   align-items: center;
   justify-content: center;
   min-height: 48px;
-  background: var(--color-concrete);
+  background: var(--color-ink);
   color: var(--color-bone);
   border: none;
   font-family: var(--font-body);
@@ -268,6 +268,20 @@
   text-transform: uppercase;
   letter-spacing: 0.05em;
   font-weight: 500;
+  cursor: pointer;
+}
+
+.checkoutBtnDisabled {
+  background: var(--color-concrete);
   cursor: not-allowed;
-  opacity: 0.6;
+  opacity: 0.65;
+}
+
+.checkoutNote {
+  margin: 0;
+  color: var(--color-concrete);
+  font-family: var(--font-body);
+  font-size: var(--text-meta);
+  line-height: 1.4;
+  text-align: center;
 }

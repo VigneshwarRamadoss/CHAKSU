@@ -14,6 +14,8 @@ export function ProductCard({ product }: { product: Product }) {
     <div className={styles.productCard}>
       <Link href={`/products/${product.handle}`} className={styles.productLink}>
         <div className={styles.mediaContainer}>
+          {!product.availableForSale && <span className={styles.statusBadge}>Sold Out</span>}
+          {product.isNewRelease && product.availableForSale && <span className={styles.statusBadge}>New Release</span>}
           {primaryMedia.isEditorial ? (
             <ParallaxLayer 
               amplitude={24} 
@@ -65,18 +67,24 @@ export function ProductCard({ product }: { product: Product }) {
 }
 
 export function FeaturedGrid({ products }: { products: Product[] }) {
+  const featuredProducts = products.filter(product => product.isNewRelease).slice(0, 4);
+
   return (
     <section className={styles.gridSection}>
       <IntersectionReveal>
         <header className={styles.gridHeader}>
           <h2 className={styles.gridTitle}>Featured Drops</h2>
+          <Link href="/collections/new-release" className={styles.headerLink}>View Release 001</Link>
         </header>
       </IntersectionReveal>
       
       <div className={styles.productGrid}>
-        {products.map(product => (
+        {featuredProducts.map(product => (
           <ProductCard key={product.id} product={product} />
         ))}
+      </div>
+      <div className={styles.gridFooter}>
+        <Link href="/collections/all" className={styles.viewAllLink}>View All Products</Link>
       </div>
     </section>
   );

@@ -90,6 +90,10 @@
   border-bottom: 1px solid rgba(10, 10, 10, .24);
 }
 
+.originCopy {
+  min-width: 0;
+}
+
 .sectionTitle {
   max-width: 13ch;
   font-family: var(--font-display);

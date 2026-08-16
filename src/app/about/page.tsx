@@ -8,7 +8,7 @@ import styles from "./About.module.css";
 export const metadata: Metadata = {
   title: "About CHAKSU",
   description:
-    "CHAKSU is a Chennai streetwear project shaped by movement, material clarity, and controlled aggression.",
+    "CHAKSU is an independent Chennai streetwear label shaped by movement, material clarity, and controlled aggression.",
 };
 
 export default function About() {
@@ -22,7 +22,7 @@ export default function About() {
             <span>movement.</span>
           </h1>
           <p className={styles.heroLead}>
-            CHAKSU is a Chennai streetwear project built around controlled
+            CHAKSU is an independent Chennai streetwear label built around controlled
             aggression: strong silhouettes, exact decisions, and details that
             earn their place.
           </p>
@@ -30,15 +30,15 @@ export default function About() {
 
         <figure className={styles.heroMedia}>
           <Image
-            src="/images/products/signature-hoodie.png"
-            alt="Bone structured CHAKSU hoodie in warm architectural light"
+            src="/images/editorial/about-construction-process.png"
+            alt="A Chennai designer working by hand on a black technical garment at a pattern-cutting table"
             fill
             sizes="(max-width: 899px) 100vw, 52vw"
             className={styles.image}
             preload
           />
           <figcaption className={styles.mediaCaption}>
-            Form / function / tension
+            Pattern / construction / proof
           </figcaption>
         </figure>
       </section>

@@ -16,6 +16,7 @@ type StickyMobileBuyBarProps = {
 
 export function StickyMobileBuyBar({
   product,
+  resolvedVariant,
   currentPrice,
   isSoldOut,
   onAddToCart,
@@ -28,8 +29,9 @@ export function StickyMobileBuyBar({
     if (!sentinel) return;
 
     const observer = new IntersectionObserver(([entry]) => {
-      // Show sticky bar when main buy button sentinel is scrolled past
-      setIsVisible(!entry.isIntersecting);
+      // A non-intersecting sentinel can be either above or below the viewport.
+      // Only reveal the shortcut after the main purchase controls were passed.
+      setIsVisible(!entry.isIntersecting && entry.boundingClientRect.top < 0);
     }, { threshold: 0 });
 
     observer.observe(sentinel);
@@ -37,6 +39,8 @@ export function StickyMobileBuyBar({
   }, [sentinelRef]);
 
   if (!isVisible) return null;
+
+  const canAddToCart = resolvedVariant?.availableForSale === true && !isSoldOut;
 
   return (
     <div className={styles.stickyMobileBar} role="region" aria-label="Quick Add to Bag">
@@ -48,10 +52,10 @@ export function StickyMobileBuyBar({
         type="button"
         className={styles.stickyMobileBtn}
         onClick={onAddToCart}
-        disabled={isSoldOut}
-        aria-label={`Add ${product.title} to Bag`}
+        disabled={!canAddToCart}
+        aria-label={canAddToCart ? `Add ${product.title} to Bag` : `Select product options for ${product.title}`}
       >
-        {isSoldOut ? "Sold Out" : "Add to Bag"}
+        {isSoldOut ? "Sold Out" : canAddToCart ? "Add to Bag" : "Select Options"}
       </button>
     </div>
   );

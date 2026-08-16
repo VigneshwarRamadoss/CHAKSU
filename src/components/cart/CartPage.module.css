@@ -239,7 +239,10 @@
 .checkoutBtn {
   width: 100%;
   min-height: 52px;
-  background: var(--color-concrete);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-ink);
   color: var(--color-bone);
   border: none;
   font-family: var(--font-body);
@@ -247,8 +250,13 @@
   text-transform: uppercase;
   letter-spacing: 0.08em;
   font-weight: 600;
+  cursor: pointer;
+}
+
+.checkoutBtnDisabled {
+  background: var(--color-concrete);
   cursor: not-allowed;
-  opacity: 0.6;
+  opacity: 0.65;
 }
 
 .checkoutNote {

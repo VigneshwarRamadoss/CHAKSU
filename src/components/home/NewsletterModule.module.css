@@ -99,3 +99,19 @@
   font-size: var(--text-small);
   margin-top: var(--space-3);
 }
+
+.errorMessage {
+  font-family: var(--font-body);
+  font-size: var(--text-small);
+  color: #ffb36b;
+  margin-top: var(--space-3);
+}
+
+.consentMessage {
+  max-width: 520px;
+  margin: 0 auto;
+  color: var(--color-concrete);
+  font-family: var(--font-body);
+  font-size: var(--text-meta);
+  line-height: 1.5;
+}

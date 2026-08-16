@@ -16,6 +16,7 @@ export function CartDrawer() {
     removeFromCart,
   } = useCart();
   const dialogRef = useRef<HTMLDialogElement>(null);
+  const checkoutUrl = cart.checkoutUrl?.startsWith("https://") ? cart.checkoutUrl : undefined;
 
   useEffect(() => {
     const dialog = dialogRef.current;
@@ -164,9 +165,14 @@ export function CartDrawer() {
           >
             View Cart
           </Link>
-          <button type="button" className={styles.checkoutBtn} disabled>
-            Checkout — Coming Soon
-          </button>
+          {checkoutUrl ? (
+            <a href={checkoutUrl} className={styles.checkoutBtn}>Secure Checkout</a>
+          ) : (
+            <button type="button" className={`${styles.checkoutBtn} ${styles.checkoutBtnDisabled}`} disabled>
+              Checkout Unavailable
+            </button>
+          )}
+          <p className={styles.checkoutNote}>Shipping and taxes are calculated at checkout.</p>
         </div>
       )}
     </dialog>

@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { getCollection, getAllCollections, getProducts, SortOption } from "@/lib/commerce/adapter";
 import { CollectionHeader } from "@/components/shop/CollectionHeader";
 import { FilterBar } from "@/components/shop/FilterBar";
@@ -39,16 +40,8 @@ export default async function CollectionPage({ params, searchParams }: PageProps
   const pageStr = typeof resolvedSearchParams.page === "string" ? resolvedSearchParams.page : "1";
   const page = parseInt(pageStr, 10) || 1;
 
-  // Fetch collection & products
-  let collection = await getCollection(handle);
-  if (!collection && handle === "all") {
-    collection = {
-      id: "col_all",
-      handle: "all",
-      title: "All Products",
-      description: "The complete CHAKSU archive. Built in movement, engineered with controlled aggression."
-    };
-  }
+  const collection = await getCollection(handle);
+  if (!collection) notFound();
 
   const allCollections = await getAllCollections();
 
@@ -66,15 +59,7 @@ export default async function CollectionPage({ params, searchParams }: PageProps
   return (
     <div className={styles.shopPage}>
       <div className={styles.container}>
-        <CollectionHeader 
-          collection={collection || {
-            id: "col_unknown",
-            handle,
-            title: handle.toUpperCase().replace("-", " "),
-            description: "CHAKSU archive collection."
-          }} 
-          allCollections={allCollections} 
-        />
+        <CollectionHeader collection={collection} allCollections={allCollections} />
 
         <FilterBar 
           totalCount={queryResult.totalCount} 

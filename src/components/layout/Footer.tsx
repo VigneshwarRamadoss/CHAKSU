@@ -31,10 +31,12 @@ export function Footer() {
 
           {/* Col 3: Customer Care / Info */}
           <div>
-            <h2 className={styles.sectionTitle}>Explore</h2>
+            <h2 className={styles.sectionTitle}>Customer Care</h2>
             <ul className={styles.linkList}>
-              <li><Link href="/about" className={styles.link}>About CHAKSU</Link></li>
-              <li><Link href="/search" className={styles.link}>Search Archive</Link></li>
+              <li><Link href="/customer-care#shipping" className={styles.link}>Shipping</Link></li>
+              <li><Link href="/customer-care#returns" className={styles.link}>Returns</Link></li>
+              <li><Link href="/customer-care#sizing" className={styles.link}>Sizing</Link></li>
+              <li><Link href="/customer-care#orders" className={styles.link}>Order Support</Link></li>
               <li><Link href="/cart" className={styles.link}>View Bag</Link></li>
             </ul>
           </div>
@@ -53,6 +55,11 @@ export function Footer() {
           <p className={styles.copyright}>
             &copy; {new Date().getFullYear()} CHAKSU. All rights reserved.
           </p>
+          <nav className={styles.footerMetaNav} aria-label="Brand information">
+            <Link href="/stories">Stories</Link>
+            <Link href="/about">About</Link>
+            <Link href="/search">Search</Link>
+          </nav>
           <div className={styles.designCredit}>
             <TheDotLogo size={14} className={styles.dotLogo} />
             <span>Design Rights — <strong>The Dot</strong></span>

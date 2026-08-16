@@ -8,15 +8,24 @@ export function NewsletterModule() {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) return;
     setStatus("loading");
-    // Simulate network request
-    setTimeout(() => {
+
+    try {
+      const response = await fetch("/api/newsletter", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+
+      if (!response.ok) throw new Error("Subscription unavailable");
       setStatus("success");
       setEmail("");
-    }, 800);
+    } catch {
+      setStatus("error");
+    }
   };
 
   return (
@@ -37,6 +46,8 @@ export function NewsletterModule() {
                 placeholder="EMAIL ADDRESS"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                onInput={() => status === "error" && setStatus("idle")}
+                autoComplete="email"
                 disabled={status === "loading" || status === "success"}
               />
               <button 
@@ -52,6 +63,14 @@ export function NewsletterModule() {
                 You have been added to the list.
               </p>
             )}
+            {status === "error" && (
+              <p className={styles.errorMessage} role="alert">
+                Sign-up is temporarily unavailable. Please try again later.
+              </p>
+            )}
+            <p className={styles.consentMessage}>
+              By subscribing, you agree to receive CHAKSU release updates. Unsubscribe at any time.
+            </p>
           </form>
         </div>
       </IntersectionReveal>

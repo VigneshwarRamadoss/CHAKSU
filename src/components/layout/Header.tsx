@@ -40,12 +40,17 @@ export function Header() {
     document.body.style.overflow = '';
   };
 
-  // Close mobile menu on route change
+  // Close the mobile menu only when navigation changes the route. Depending on
+  // `isMobileMenuOpen` here caused the dialog to close immediately after open.
   useEffect(() => {
-    if (isMobileMenuOpen) {
-      setTimeout(closeDrawer, 0);
-    }
-  }, [pathname, isMobileMenuOpen]);
+    const timer = window.setTimeout(() => {
+      setIsMobileMenuOpen(false);
+      dialogRef.current?.close();
+      document.body.style.overflow = "";
+    }, 0);
+
+    return () => window.clearTimeout(timer);
+  }, [pathname]);
 
   // Handle native close event (e.g. Escape key)
   useEffect(() => {
@@ -77,16 +82,16 @@ export function Header() {
         </button>
 
         <nav className={styles.desktopNav} aria-label="Main Navigation">
-          <Link href="/collections/new-release" className={styles.navLink}>
+          <Link href="/collections/new-release" className={styles.navLink} aria-current={pathname === "/collections/new-release" ? "page" : undefined}>
             New Release
           </Link>
-          <Link href="/collections/all" className={styles.navLink}>
+          <Link href="/collections/all" className={styles.navLink} aria-current={pathname === "/collections/all" ? "page" : undefined}>
             Shop
           </Link>
-          <Link href="/stories" className={styles.navLink}>
+          <Link href="/stories" className={styles.navLink} aria-current={pathname === "/stories" ? "page" : undefined}>
             Stories
           </Link>
-          <Link href="/about" className={styles.navLink}>
+          <Link href="/about" className={styles.navLink} aria-current={pathname === "/about" ? "page" : undefined}>
             About
           </Link>
         </nav>
@@ -96,7 +101,7 @@ export function Header() {
         </Link>
 
         <nav className={styles.utilityNav} aria-label="Utility Navigation">
-          <Link href="/search" className={styles.utilityLink}>
+          <Link href="/search" className={styles.utilityLink} aria-current={pathname === "/search" ? "page" : undefined}>
             Search
           </Link>
           <button

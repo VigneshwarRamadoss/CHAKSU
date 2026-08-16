@@ -78,6 +78,9 @@
   font-size: var(--text-small);
   color: var(--color-bone);
   transition: opacity var(--motion-fast) var(--ease-enter);
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
 }
 
 .link:hover {
@@ -121,6 +124,20 @@
 
 .copyright {
   margin: 0;
+}
+
+.footerMetaNav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.footerMetaNav a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  color: var(--color-concrete);
 }
 
 .designCredit {
