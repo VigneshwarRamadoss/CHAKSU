@@ -6,6 +6,11 @@ export function Footer() {
   return (
     <footer className={styles.footer}>
       <div className={styles.container}>
+        <div className={styles.footerSignal}>
+          <span>CHAKSU / Chennai</span>
+          <span>Online / India</span>
+          <Link href="/collections/new-release">Drop 001 available ↗</Link>
+        </div>
         <div className={styles.grid}>
           {/* Col 1: Brand Identity */}
           <div className={styles.brandCol}>
@@ -66,6 +71,7 @@ export function Footer() {
           </div>
           <span className={styles.monoBrand}>STATEMENT SILHOUETTES</span>
         </div>
+        <Link href="/" className={styles.footerWordmark} aria-label="Return to CHAKSU home">CHAKSU</Link>
       </div>
     </footer>
   );

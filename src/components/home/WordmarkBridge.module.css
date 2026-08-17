@@ -2,9 +2,67 @@
   background-color: var(--color-bone);
   color: var(--color-ink);
   overflow: hidden;
-  padding: clamp(80px, 15vh, 160px) 0;
+  min-height: clamp(360px, 46vw, 650px);
+  padding: var(--space-4) 0 var(--space-5);
   display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
+  position: relative;
+  border-bottom: 1px solid rgba(10, 10, 10, 0.18);
+  background-image:
+    linear-gradient(rgba(10, 10, 10, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(10, 10, 10, 0.055) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+.bridgeSection::after {
+  content: "";
+  position: absolute;
+  width: 1px;
+  height: 165%;
+  left: 72%;
+  top: -34%;
+  background: var(--color-sodium);
+  transform: rotate(31deg);
+  transform-origin: center;
+}
+
+.bridgeRail,
+.bridgeStatement {
+  width: 100%;
+  padding: 0 var(--space-4);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: var(--space-4);
+  position: relative;
+  z-index: 2;
+  font-family: var(--font-mono);
+  font-size: var(--text-meta);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.bridgeRail span:nth-child(2) {
+  display: none;
+}
+
+.bridgeStatement p {
+  max-width: 34rem;
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 1.6vw, 1.45rem);
+  line-height: 1.25;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.bridgeStatement a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  border-bottom: 1px solid currentColor;
 }
 
 .bridgeFrame {
@@ -19,8 +77,21 @@
 
 .wordmark {
   font-family: var(--font-display);
-  font-size: clamp(8rem, 20vw, 24rem);
+  font-size: clamp(8rem, 22vw, 22rem);
   text-transform: uppercase;
-  line-height: 0.8;
-  letter-spacing: -0.02em;
+  line-height: 0.72;
+  letter-spacing: -0.035em;
+  margin: 0;
+  font-weight: 400;
+}
+
+@media (min-width: 900px) {
+  .bridgeRail,
+  .bridgeStatement {
+    padding-inline: var(--space-6);
+  }
+
+  .bridgeRail span:nth-child(2) {
+    display: inline;
+  }
 }

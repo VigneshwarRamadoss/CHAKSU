@@ -32,10 +32,13 @@ export function NewsletterModule() {
     <section className={styles.newsletterSection}>
       <IntersectionReveal>
         <div className={styles.newsletterContent}>
-          <h2 className={styles.newsletterTitle}>Join the list</h2>
-          <p className={styles.newsletterDesc}>Exclusive access to releases and editorial stories.</p>
+          <div className={styles.newsletterHeading}>
+            <p className={styles.newsletterIndex}>Transmission / Members Only</p>
+            <h2 className={styles.newsletterTitle}>Enter the<br /><span>signal.</span></h2>
+          </div>
           
           <form className={styles.form} onSubmit={handleSubmit}>
+            <p className={styles.newsletterDesc}>Early access to limited drops, field notes, and studio dispatches. No weekly noise.</p>
             <div className={styles.inputGroup}>
               <label htmlFor="newsletter-email" className="sr-only">Email address</label>
               <input
@@ -55,7 +58,7 @@ export function NewsletterModule() {
                 className={styles.submitBtn}
                 disabled={status === "loading" || status === "success" || !email}
               >
-                {status === "loading" ? "..." : status === "success" ? "Subscribed" : "Submit"}
+                {status === "loading" ? "Transmitting..." : status === "success" ? "Signal received" : "Join CHAKSU ↗"}
               </button>
             </div>
             {status === "success" && (
@@ -69,7 +72,7 @@ export function NewsletterModule() {
               </p>
             )}
             <p className={styles.consentMessage}>
-              By subscribing, you agree to receive CHAKSU release updates. Unsubscribe at any time.
+              By subscribing, you agree to receive CHAKSU release updates. Unsubscribe at any time. Drop frequency: irregular.
             </p>
           </form>
         </div>

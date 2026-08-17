@@ -616,27 +616,26 @@
 
 /* Search Form */
 .searchSection {
-  padding: var(--space-6) 0;
-  border-bottom: 1px solid var(--border-light);
-  margin-bottom: var(--space-6);
+  padding: var(--space-5) 0 0;
 }
 
 .searchForm {
   display: flex;
   gap: var(--space-3);
-  max-width: 720px;
+  max-width: none;
   width: 100%;
 }
 
 .searchInput {
   flex: 1;
-  min-height: 52px;
+  min-width: 0;
+  min-height: 68px;
   padding: 0 var(--space-4);
   background: transparent;
   border: 1px solid var(--color-ink);
   color: var(--color-ink);
   font-family: var(--font-body);
-  font-size: var(--text-base);
+  font-size: clamp(0.9rem, 1.7vw, 1.35rem);
 }
 
 .searchInput:focus-visible {
@@ -645,10 +644,11 @@
 }
 
 .searchSubmitBtn {
-  min-height: 52px;
-  padding: 0 var(--space-6);
-  background: var(--color-ink);
-  color: var(--color-bone);
+  min-height: 68px;
+  min-width: min(28vw, 220px);
+  padding: 0 var(--space-5);
+  background: var(--color-sodium);
+  color: var(--color-ink);
   border: none;
   font-family: var(--font-body);
   font-size: var(--text-small);
@@ -663,4 +663,113 @@
   font-size: clamp(2.5rem, 5vw, 4.5rem);
   text-transform: uppercase;
   margin-bottom: var(--space-3);
+}
+
+.searchIntro {
+  display: grid;
+  gap: var(--space-4);
+  padding-top: var(--space-5);
+}
+
+.searchEyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--text-meta);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-ink-muted);
+}
+
+.searchPageTitle {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(4.5rem, 12vw, 10rem);
+  line-height: 0.78;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+
+.searchPageTitle span {
+  color: var(--color-sodium);
+}
+
+.searchPageDesc {
+  max-width: 32rem;
+  font-size: var(--text-lg);
+  line-height: 1.4;
+  color: var(--color-ink-muted);
+}
+
+.popularSearches {
+  width: min(100%, 760px);
+  margin-top: var(--space-4);
+  display: grid;
+  grid-template-columns: 1fr;
+  border-top: 1px solid var(--border-light);
+}
+
+.searchSuggestionTitle {
+  font-family: var(--font-mono);
+  font-size: var(--text-small);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.popularSearches a {
+  min-height: 58px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-light);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  text-transform: uppercase;
+}
+
+.popularSearches a:hover span {
+  color: var(--color-sodium);
+}
+
+@media (min-width: 900px) {
+  .searchIntro {
+    grid-template-columns: minmax(0, 1fr) minmax(260px, 0.4fr);
+    align-items: end;
+  }
+
+  .searchEyebrow,
+  .searchPageTitle {
+    grid-column: 1;
+  }
+
+  .searchPageDesc {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  .popularSearches {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .popularSearches a:nth-child(odd) {
+    padding-right: var(--space-4);
+    border-right: 1px solid var(--border-light);
+  }
+
+  .popularSearches a:nth-child(even) {
+    padding-left: var(--space-4);
+  }
+}
+
+@media (max-width: 599px) {
+  .searchForm {
+    gap: var(--space-2);
+  }
+
+  .searchSubmitBtn {
+    min-width: 112px;
+    padding-inline: var(--space-3);
+  }
+
+  .searchInput {
+    padding-inline: var(--space-3);
+  }
 }

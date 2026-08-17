@@ -83,24 +83,25 @@ export function Header() {
 
         <nav className={styles.desktopNav} aria-label="Main Navigation">
           <Link href="/collections/new-release" className={styles.navLink} aria-current={pathname === "/collections/new-release" ? "page" : undefined}>
-            New Release
+            <span>01</span> New Release
           </Link>
           <Link href="/collections/all" className={styles.navLink} aria-current={pathname === "/collections/all" ? "page" : undefined}>
-            Shop
+            <span>02</span> Shop
           </Link>
           <Link href="/stories" className={styles.navLink} aria-current={pathname === "/stories" ? "page" : undefined}>
-            Stories
+            <span>03</span> Stories
           </Link>
           <Link href="/about" className={styles.navLink} aria-current={pathname === "/about" ? "page" : undefined}>
-            About
+            <span>04</span> About
           </Link>
         </nav>
 
         <Link href="/" className={styles.wordmark} aria-label="CHAKSU Home">
-          CHAKSU
+          <span className={styles.brandDevice} aria-hidden="true">K/</span> CHAKSU
         </Link>
 
         <nav className={styles.utilityNav} aria-label="Utility Navigation">
+          <span className={styles.liveStatus} aria-hidden="true">Drop 001 / Live</span>
           <Link href="/search" className={styles.utilityLink} aria-current={pathname === "/search" ? "page" : undefined}>
             Search
           </Link>

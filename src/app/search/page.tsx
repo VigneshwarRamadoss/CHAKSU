@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import Link from "next/link";
 import { searchProducts, SortOption } from "@/lib/commerce/adapter";
 import { SearchForm } from "@/components/shop/SearchForm";
 import { FilterBar } from "@/components/shop/FilterBar";
@@ -52,20 +53,31 @@ export default async function SearchPage({ searchParams }: PageProps) {
     <div className={styles.shopPage}>
       <div className={styles.container}>
         <header className={styles.collectionHeader}>
+          <div className={styles.searchIntro}>
+            <p className={styles.searchEyebrow}>Archive / Product Index</p>
+            <h1 className={styles.searchPageTitle}>Find your<br /><span>system.</span></h1>
+            <p className={styles.searchPageDesc}>Search by silhouette, material, climate, or product name.</p>
+          </div>
           <SearchForm initialQuery={query} />
           {query && (
-            <h1 className={styles.searchQueryHeading}>
+            <h2 className={styles.searchQueryHeading}>
               Results for &ldquo;{query}&rdquo;
-            </h1>
+            </h2>
           )}
         </header>
 
         {!query && (
           <div className={styles.emptyState}>
-            <h1 className={styles.emptyTitle}>Search the Archive</h1>
+            <p className={styles.searchSuggestionTitle}>Suggested coordinates</p>
             <p className={styles.emptyDesc}>
-              Enter a search query above to explore CHAKSU technical outerwear, K-line tees, and cargo garments.
+              Start with a construction, climate, or silhouette.
             </p>
+            <nav className={styles.popularSearches} aria-label="Suggested searches">
+              <Link href="/search?q=cargo">Cargo <span>↗</span></Link>
+              <Link href="/search?q=monsoon">Monsoon <span>↗</span></Link>
+              <Link href="/search?q=technical">Technical <span>↗</span></Link>
+              <Link href="/search?q=tee">Heavyweight Tee <span>↗</span></Link>
+            </nav>
           </div>
         )}
 

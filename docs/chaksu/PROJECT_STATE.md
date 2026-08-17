@@ -1,6 +1,6 @@
 # CHAKSU Project State
 
-**Current Status:** Phase 4.7 Complete — Cinematic Entry Hardened & Ready for Phase 5 (Shopify Integration)
+**Current Status:** Phase 4.8 Complete — Full-Site Visual Quality Pass & Ready for Phase 5 (Shopify Integration)
 
 ## Completed Phases
 
@@ -52,5 +52,15 @@
 - **Resilience**: Handles storage exceptions, reduced-motion changes during playback, background-tab interruption, component unmount, repeat visits, and constrained connections without adding a motion dependency.
 - **Responsive QA**: In-app browser checks passed at `320×568`, `375×812`, `390×844`, `768×1024`, `844×390`, `1280×800`, `1440×900`, and `1920×1080` with zero horizontal overflow and no Skip/header collision.
 - **Verification**: `npm run lint`, `npx tsc --noEmit`, and `npm run build` pass. The measured live sequence completed about `1.37 s` after intro mount, within the `1.5 s` budget.
+
+### Phase 4.8: Full-Site Visual Quality Pass
+- **Global Navigation**: Increased header authority with indexed navigation, K-device branding, and a live-drop status signal while preserving mobile drawer and accessibility behavior.
+- **Homepage Bridge**: Replaced the mostly empty wordmark spacer with a grid-based brand system, Chennai metadata, a positioning statement, and an About handoff.
+- **Editorial Narrative**: Rebuilt the oversized three-image sequence into two focused field-note chapters with tighter pacing, indexed content, and dedicated campaign photography rather than repeated catalogue media.
+- **Newsletter & Footer**: Upgraded the signup to a campaign-level transmission module and added a footer status rail, directional link details, and monumental closing wordmark.
+- **Search**: Added a clear archive-search proposition, suggested query coordinates, stronger hierarchy, and responsive controls with zero horizontal overflow.
+- **Customer Care**: Converted the linear policy page into an indexed service system with topic navigation, operational metadata, and more scannable desktop/mobile layouts.
+- **Preserved Sections**: Stories, About, collection discovery, and PDP retained their existing structures because the visual audit found their core hierarchy and content direction already strong.
+- **Visual Assets**: Added two dedicated generated editorial images for homepage movement and construction chapters.
 
 ## Next Phase: Phase 5 (Shopify Storefront API Integration & Checkout)

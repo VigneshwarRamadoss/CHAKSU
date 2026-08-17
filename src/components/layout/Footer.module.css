@@ -1,9 +1,29 @@
 .footer {
   background-color: var(--color-ink);
   color: var(--color-bone);
-  padding: var(--space-8) 0 var(--space-6);
+  padding: var(--space-5) 0 0;
   margin-top: auto;
   border-top: 1px solid rgba(242, 239, 230, 0.1);
+}
+
+.footerSignal {
+  min-height: 56px;
+  margin-bottom: var(--space-7);
+  padding-bottom: var(--space-4);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--space-3);
+  border-bottom: 1px solid rgba(242, 239, 230, 0.16);
+  font-family: var(--font-mono);
+  font-size: var(--text-meta);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--color-concrete);
+}
+
+.footerSignal a {
+  color: var(--color-sodium);
 }
 
 .container {
@@ -40,7 +60,7 @@
 
 .brandTitle {
   font-family: var(--font-display);
-  font-size: var(--text-h2);
+  font-size: clamp(2.8rem, 5vw, 5rem);
   text-transform: uppercase;
   color: var(--color-bone);
   letter-spacing: -0.01em;
@@ -81,6 +101,21 @@
   min-height: 44px;
   display: inline-flex;
   align-items: center;
+}
+
+.link::after {
+  content: "↗";
+  margin-left: 0.45rem;
+  color: var(--color-sodium);
+  opacity: 0;
+  transform: translate(-4px, 4px);
+  transition: opacity var(--motion-fast) var(--ease-enter), transform var(--motion-fast) var(--ease-enter);
+}
+
+.link:hover::after,
+.link:focus-visible::after {
+  opacity: 1;
+  transform: translate(0, 0);
 }
 
 .link:hover {
@@ -162,4 +197,19 @@
 
 .monoBrand {
   letter-spacing: 0.05em;
+}
+
+.footerWordmark {
+  width: 100%;
+  margin-top: var(--space-5);
+  display: block;
+  overflow: hidden;
+  font-family: var(--font-display);
+  font-size: clamp(8rem, 25vw, 24rem);
+  font-weight: 400;
+  line-height: 0.64;
+  letter-spacing: -0.045em;
+  text-align: center;
+  color: var(--color-bone);
+  white-space: nowrap;
 }

@@ -62,7 +62,7 @@ export default function RootLayout({
             Skip to main content
           </a>
           <Header />
-          <main id="main-content" tabIndex={-1} style={{ minHeight: "calc(100vh - 64px - 200px)", paddingTop: "64px" }}>
+          <main id="main-content" tabIndex={-1} style={{ minHeight: "calc(100vh - 72px - 200px)", paddingTop: "72px" }}>
             {children}
           </main>
           <Footer />
